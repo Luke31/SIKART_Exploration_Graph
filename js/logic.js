@@ -79,19 +79,25 @@ $(function(){
     $('#info').hide();
   }
   
+  function loadingFinished(){
+      cy.elements().layout({ name: 'cose' }); //cose, concentric
+      console.log('finished loading Ausstellungen/persons');
+  }
+  
   function initCy(){
       
     var cy = window.cy = cytoscape({
       container: document.getElementById('cy'),
-      layout: { name: 'concentric', padding: layoutPadding },
-      motionBlur: true,
-      selectionType: 'single',
-      boxSelectionEnabled: false,
-      autoungrabify: true,
+      //layout: { name: 'concentric', padding: layoutPadding },
+      //motionBlur: true,
+      //selectionType: 'single',
+      //boxSelectionEnabled: false,
+      //autoungrabify: true,
       style: [
                {
                  selector: 'node',
                  style: {
+                   'color': 'white',
                    'background-color': '#666',
                    'label': 'data(name)'
                  }
@@ -106,26 +112,31 @@ $(function(){
           } 
       ]
     });
-    $.getJSON("ausstellungen.json", function(json) {
-      console.log(json); // this will show the info it in firebug console
+    var artists = new Set();
+    var ausstellungen = new Set();
+    $.getJSON("data.json", function(json) {
       cy.startBatch();
-      json.forEach(function(aus){
-        cy.add({group: "nodes", data: {id:aus.HAUPTNR, name:aus.AUSST_TITEL}});
+      json.persons.forEach(function(artist){
+        if(!artists.has(artist.HAUPTNR)) { //Only add non-existing ausstellung
+            artists.add(artist.HAUPTNR);
+            cy.add({group: "nodes", data: {id:artist.HAUPTNR, name:artist.NAME}});
+        }
       });
+      
+      json.exhibitions.forEach(function(aus){
+            if(!ausstellungen.has(aus.HAUPTNR) && aus.MONAT == '3') { //Only add non-existing ausstellung
+                ausstellungen.add(aus.HAUPTNR);
+                cy.add({group: "nodes", data: {id:aus.HAUPTNR, name:aus.AUSST_TITEL}});
+                aus.ARTISTS.forEach(function(artistHauptNr){
+                  if(artists.has(artistHauptNr)) { //Only add edge, if src is really available
+                    cy.add({group: "edges", data: {source:artistHauptNr, target:aus.HAUPTNR}});
+                  }          
+                });
+            }
+          });
+      
       cy.endBatch();
-    });
-    
-    $.getJSON("artists.json", function(json) {
-      console.log(json); // this will show the info it in firebug console
-      cy.startBatch();
-      json.forEach(function(artist){
-        cy.add({group: "nodes", data: {id:artist.HAUPTNR, name:artist.NAME}});
-        artist.ausstellungen.forEach(function(aus){
-          cy.add({group: "edges", data: {source:artist.HAUPTNR, target:aus.HAUPTNR}});	  
-        });
-      });
-      cy.endBatch();
-    });
+    }).then(loadingFinished);
     
     cy.on('free', 'node', function( e ){
       var n = e.cyTarget;
