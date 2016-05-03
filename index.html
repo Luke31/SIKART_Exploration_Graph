@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link href="css/style.css" rel="stylesheet" />
+  <!--<link href="css/style.css" rel="stylesheet" />-->
+  <link href="css/styleAn.css" rel="stylesheet" />
   <meta charset=utf-8 />
   <title>Server</title>
   <meta name="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   <script src="bower_components/cytoscape/dist/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
 </head>
   
 <body>
   <div id="cy"></div>
-  <script src="js/server.js"></script>
+  <div id="loading">
+    <span class="fa fa-refresh fa-spin"></span>
+  </div>
+  <div id="info">
+  </div>
+  
+  <script src="js/logic.js"></script>
 </body>
 </html>

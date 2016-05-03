@@ -1,0 +1,3 @@
+Artists = [{"ART_HAUPTNR":1234, "ART_NAME":"Fritz"}]
+Ausstellungen = [{"AUS_HAUPTNR":1234,"AUS_NAME":"asdf","AUS_ORT":"Zürich"}]
+ArtAus = [{"ART_HAUPTNR":1234, "AUS_HAUPTNR":1234}]
