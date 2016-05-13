@@ -17,7 +17,7 @@ var cy = cytoscape({
             	 'target-arrow-shape': 'triangle'
              }
       } 
-  ],
+  ]
 });
 
 
@@ -28,14 +28,14 @@ req.send();
 
 function reqListener () {
   var langs = new Set();
-  rows = JSON.parse(this.responseText);
+  var rows = JSON.parse(this.responseText);
   cy.startBatch();
-  for(r in rows) {
-	  obj = rows[r];
+  for(var r in rows) {
+	  var obj = rows[r];
 	  cy.add({group: "nodes", data: {id:r, name:obj['GEONAME']}});
-	  lang = obj['SPRACODE'];
+	  var lang = obj['SPRACODE'];
 	  if(!langs.has(lang)) {
-		  langs.add(lang)
+		  langs.add(lang);
 		  cy.add({group: "nodes", data: {id:lang, name:lang}});
 	  }
 	  cy.add({group: "edges", data: {source:r, target:lang}});	  

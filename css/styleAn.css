@@ -10,7 +10,7 @@ html, body {
   position: absolute;
   left: 0;
   top: 0;
-  background: #000;
+  background: #FFF;
 }
 
 #loading {
@@ -22,6 +22,11 @@ html, body {
   margin-top: -0.5em;
   font-size: 2em;
   color: #fff;
+}
+
+#logo{
+  position:absolute;
+  z-index: 999;
 }
 
 #loading.loaded {
@@ -111,23 +116,30 @@ body.calc #loading {
   font-size: 1.25em;
 }
 
-.ac-node-type,
-.ac-milk,
-.ac-country,
-.ac-more {
+.ac-text {
   font-size: 0.8em;
 }
 
-#info {
+.info {
   position: absolute;
-  left: 0;
-  top: 3em;
+  right: 0;
   margin: 0.5em;
   background: #bbdbf7;
   border-radius: 0.25em;
   border: 1px solid #ccc;
-  width: 14em;
+  width: 30em;
   display: none;
+  color: white;
+  padding: 1em;
+}
+
+#infoArtist{
+  background: #666;
+}
+
+#infoExhibition{
+
+  background: #c06;
 }
 
 #info p {
