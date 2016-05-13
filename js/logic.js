@@ -10,10 +10,11 @@ $(function(){
     '<p class="ac-text">Ort: {{Ort}}</p>'
   ].join(''));
   var infoTemplateArtist = Handlebars.compile([
-    '<p class="ac-name">Künstler: {{name}}</p>',
-    '<p class="ac-text">Bewertung: {{Rating}}</p>',
-    '<p class="ac-text">Lebensdaten: {{Lebensdaten}}</p>',
-    '<p class="ac-text">Geschlecht: {{Geschlecht}}</p>'
+    '<p class="ac-name">Künstler: {{firstname}} {{name}}</p>',
+    '<p class="ac-text">{{Lebensdaten}}</p>',
+    '<p class="ac-text">{{vita}}</p>',
+    '<p class="ac-text">Geschlecht: {{Geschlecht}}</p>', 
+    '<p class="ac-text">Bewertung: {{Rating}}</p>'
   ].join(''));
 
   function highlight( node ){
@@ -122,7 +123,7 @@ $(function(){
           aus.ARTISTS.forEach(function(artistHauptNr){
             if(artists.has(artistHauptNr)) { //Only add edge, if src is really available
               artist = artists.get(artistHauptNr);
-              cy.add({group: "nodes", data: {id:artist.HAUPTNR, name:artist.NAME, NodeType:'Artist', Geschlecht:artist.GESCHLECHT, Lebensdaten:artist.LEBENSDATEN, Rating:artist.RATING}});
+              cy.add({group: "nodes", data: {id:artist.HAUPTNR, name:artist.NAME, firstname: artist.VORNAME, NodeType:'Artist', Geschlecht:artist.GESCHLECHT, Lebensdaten:artist.LEBENSDATEN, vita:artist.VITAZEILE, Rating:artist.RATING}});
               cy.add({group: "edges", data: {source:artistHauptNr, target:aus.HAUPTNR, interaction:'cc'}});
             }
           });
